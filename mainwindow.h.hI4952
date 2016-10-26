@@ -1,0 +1,104 @@
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+#include <QCoreApplication>
+#include <QGraphicsView>
+#include <QPainter>
+#include <QInputDialog>
+#include <QtCore>
+#include <QTimer>
+
+#include "vertex.h"
+#include "edge.h"
+#include "graphgenerator.h"
+#include "lineanimator.h"
+
+class InfoWidget;
+
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    MainWindow();
+
+private slots:// private slot functions
+    void generateErdosReyni();
+    void generateKarateClub();
+    void generateWeightedKarateClub();
+    void read_seperated_graph_input();
+    void draw_aggregation_result();
+    //aggregation
+    void random_aggregate();
+    void random_aggregate_with_degree_comparison();
+    void random_aggregate_with_weight_comparison();
+    void random_aggregate_with_neighbour_initial_degree_bias();
+    void random_aggregate_with_highest_edge_weight_and_weight_comparison();
+    void random_aggregate_with_edge_weight_bias_and_weight_comparison();
+    void compareResultWithKarateClubData();
+
+    //test with multiple runs
+    void multirun_aggregate();
+
+
+private:
+    //random aggregation
+    //create Actions and Menu
+    void setEdgeWeight();
+    bool checkGraphCondition();
+    void createActions();
+    void createMenus();
+    void setUpGraphInfoWidget();
+    void createSeperateScene();
+    void reConnectGraph();
+    void resetGraphics();
+    void saveAggregationResultInSeperateWindow();
+    QPair<int,int> compareResultWithKarateClubDataStats();
+
+    //
+
+    QSequentialAnimationGroup * prepare_animation_for_one_vertex(QList<int> edges, Vertex * abs_v, Vertex * absorber);
+    void draw_aggregation_animation();
+    void layout_graph(NormalGraph &G);
+    void preserveVertexPointer();
+
+
+    //private variables
+    NormalGraph myGraph;
+    QList<QPointF> originVertexPos;
+    QList<Vertex*> myVertexList;
+    QList<Edge*> myEdgeList;
+    QList<LineAnimator*> myLine;
+    QList<Vertex*> centroids;
+    QList<Vertex*> cluster_vertex;
+    QList<int> edge_weight;
+    QGraphicsScene *myScene;
+    QGraphicsView *myView;
+    QMainWindow * originGraph;
+    bool graphIsReady;
+
+    //all menus
+    QMenu *generateGraphMenu;
+    QMenu *aggregateMenu;
+    InfoWidget * myInfoWidget;
+
+    //all actions
+    QAction *generateErdosReyniAction;
+    QAction *generateKarateClubAction;
+    QAction *generateWeightedKarateClubAction;
+    QAction *readInputAction;
+    QAction *comparesKarateClubResultAction;
+    QAction *randomAggregateAction;
+    QAction *randomAggregateWithInitialDegreeBiasAction;
+    QAction *randomAggregationWithDegreeComparisonAction;
+    QAction *randomAggregationWithWeightComparisonAction;
+    QAction *randomAggregationSelectHighestEdgeWeightWithVertexWeightComparisonAction;
+    QAction *randomAggregationWithEdgeWeightBiasAndVertexWeightComparisonAction;
+    //multiple test
+    QAction *multipleAggregateAction;
+};
+
+#endif // MAINWINDOW_H
