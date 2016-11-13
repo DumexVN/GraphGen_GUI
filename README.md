@@ -1,5 +1,5 @@
 # GraphGen_GUI
-* this is my visual platform to carry out experiments for clustering and by no means - optimised *
+# this is my visual platform to carry out experiments for clustering and by no means - optimised or friendly-UI
 Graph GUI
 Allow visualisation and interaction with graphs.
 Core features involve interaction with graphs with clustering objectives i.e.
